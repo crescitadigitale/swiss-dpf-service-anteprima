@@ -19,6 +19,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
 <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../../assets/css/style.css">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://swissdpfservice.ch/"}, {"@type": "ListItem", "position": 2, "name": "Guida MFK", "item": "https://swissdpfservice.ch/guide/mfk-filtro-antiparticolato/"}]}</script>
 </head>
@@ -41,7 +42,16 @@
 <div class="hero-actions"><a class="btn" href="../../contatti/index.html#modulo">Richiedi un preventivo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn--ghost" href="tel:+41762925822">Chiama 076 292 58 22</a></div>
 </div></div></section>
 
-<section class="section"><div class="wrap"><article class="prose">
+<section class="section" id="verifica"><div class="wrap"><div class="tool" id="mfk-tool" hidden data-contact="../../contatti/index.html">
+<div class="eyebrow">Verifica in 10 secondi</div><h2 id="verifica-t">Il tuo diesel rientra nel controllo MFK?</h2>
+<p class="muted">Inserisci il codice emissioni del libretto (campo 72). Indicazione di massima.</p>
+<form class="tool-form" novalidate>
+<div class="field"><label for="m-mezzo">Veicolo</label><select id="m-mezzo" name="mezzo"><option value="auto">Auto o furgone</option><option value="pesante">Camion o autobus</option></select></div>
+<div class="field"><label for="m-alim">Alimentazione</label><select id="m-alim" name="alim"><option value="diesel">Diesel</option><option value="altro">Benzina o altro</option></select></div>
+<div class="field"><label for="m-codice">Codice (campo 72)</label><input id="m-codice" name="codice" placeholder="Es. B6 o E06" autocomplete="off" maxlength="20"></div>
+<div><button class="btn btn--sm" type="submit">Verifica</button></div>
+</form><div class="tool-out" role="status" aria-live="polite"></div></div>
+<article class="prose">
 <h2>Cosa è cambiato dal 2023</h2>
 <p>Dal 1° gennaio 2023, nei controlli periodici (MFK) oltre alla sicurezza del veicolo viene verificato il corretto funzionamento del filtro antiparticolato dei diesel, con una misura del numero di particelle allo scarico.</p>
 <h2>Quali veicoli riguarda</h2>

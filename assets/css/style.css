@@ -1,4 +1,5 @@
 /* SWISS DPF SERVICE — foglio di stile unico. Palette ricavata dal logo ufficiale. */
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/inter-var-latin.woff2") format("woff2")}
 :root{
   --black:#181c20;
   --ink:#181c20;
@@ -23,8 +24,8 @@ body{margin:0;color:var(--text);background:var(--white);font:16px/1.65 "Inter","
 img,svg{max-width:100%;height:auto;display:block}
 a{color:inherit}
 p{margin:0 0 1em}
-h1,h2,h3,h4{line-height:1.12;margin:0 0 .5em;letter-spacing:-.02em;font-weight:750}
-h1{font-size:clamp(2.1rem,5.2vw,3.6rem)}
+h1,h2,h3,h4{line-height:1.08;margin:0 0 .5em;letter-spacing:-.03em;font-weight:800}
+h1{font-size:clamp(2.2rem,5.6vw,4rem);font-weight:850}
 h2{font-size:clamp(1.7rem,3.4vw,2.5rem)}
 h3{font-size:1.2rem;letter-spacing:-.01em}
 ul{margin:0;padding:0}
@@ -281,3 +282,79 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
 .section--dark .card .ico{color:var(--green-bright)}
 .mt{margin-top:24px}
 .grid--1{grid-template-columns:1fr}
+
+/* ---------- Tipografia e movimento ---------- */
+.hero h1 em{font-style:italic;font-weight:900;letter-spacing:-.04em}
+.btn svg{transition:transform .18s}
+.btn:hover svg{transform:translateX(3px)}
+.btn{box-shadow:0 1px 0 rgba(24,28,32,.06)}
+.btn:active{transform:translateY(1px)}
+.hero-logo{transition:transform .4s}
+@media (hover:hover){.hero-logo:hover{transform:translateY(-4px)}}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.hero .wrap>div:first-child>*{animation:rise .7s both}
+.hero .wrap>div:first-child>*:nth-child(2){animation-delay:.08s}
+.hero .wrap>div:first-child>*:nth-child(3){animation-delay:.16s}
+.hero .wrap>div:first-child>*:nth-child(4){animation-delay:.24s}
+.hero .wrap>div:first-child>*:nth-child(5){animation-delay:.32s}
+.hero-logo{animation:rise .8s .2s both}
+.js .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease var(--d,0ms),transform .6s ease var(--d,0ms)}
+.js .reveal.in{opacity:1;transform:none}
+@keyframes flow{to{stroke-dashoffset:-22}}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+.diagram .out-flow{animation:flow 1.4s linear infinite}
+.diagram .in-arrow{animation:pulse 1.8s ease-in-out infinite}
+.diagram .in-arrow:nth-of-type(2){animation-delay:.25s}
+.diagram .in-arrow:nth-of-type(3){animation-delay:.5s}
+
+/* ---------- Diagnosi guidata ---------- */
+.guide{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:32px;box-shadow:0 16px 50px rgba(24,28,32,.07);max-width:900px}
+.guide-progress{height:6px;background:var(--line);border-radius:3px;margin-bottom:28px;overflow:hidden}
+.guide-bar{display:block;height:100%;width:33%;background:var(--green);border-radius:3px;transition:width .35s}
+.guide fieldset{border:0;margin:0;padding:0;min-width:0}
+.guide legend{font-size:1.35rem;font-weight:800;letter-spacing:-.02em;padding:0;margin-bottom:6px}
+.guide .hint{color:var(--muted);font-size:14px;margin:0 0 18px}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.opt span{display:flex;align-items:center;gap:12px;padding:16px 18px;border:2px solid var(--line);border-radius:10px;font-weight:600;font-size:15px;min-height:58px;background:var(--white);transition:border-color .15s,background .15s}
+.opt span::before{content:"";flex:none;width:20px;height:20px;border:2px solid #b4bcc5;border-radius:50%;background:var(--white)}
+.opts--multi .opt span::before{border-radius:5px}
+.opt:hover span{border-color:#9bc66a}
+.opt input:checked+span{border-color:var(--green);background:#f1f8ea}
+.opt input:checked+span::before{border-color:var(--green);background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-6.5' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.opt input:focus-visible+span{outline:3px solid var(--blue);outline-offset:2px}
+.guide-nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.guide-nav .btn[disabled]{opacity:.45;cursor:not-allowed}
+.guide-result h3{font-size:1.6rem;color:var(--green-dark)}
+.guide-result .actions{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0 10px}
+.guide-result .note{font-size:13px;color:var(--muted)}
+
+/* ---------- Verifica MFK ---------- */
+.tool{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:28px;max-width:760px;box-shadow:0 16px 50px rgba(24,28,32,.07);margin:0 0 32px}
+.tool h2{font-size:1.5rem}
+.tool-form{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:end;margin-top:16px}
+.tool-out{margin-top:18px;border-radius:10px;padding:16px 18px;display:none}
+.tool-out p{margin:.4em 0}
+.tool-out.info,.tool-out.ok,.tool-out.warn{display:block}
+.tool-out.info{background:var(--paper);border-left:4px solid #9aa3ad}
+.tool-out.ok{background:#eef7e6;border-left:4px solid var(--green)}
+.tool-out.warn{background:#fff6e0;border-left:4px solid #e0a100}
+
+/* ---------- Richiamami ---------- */
+.callback{background:var(--ink);color:var(--white);border-radius:12px;padding:24px;margin-bottom:20px}
+.callback h3{font-size:1.15rem;margin-bottom:4px}
+.callback p{font-size:14px;color:#c5cad1}
+.callback .fields{margin-top:14px}
+.callback input{border-color:#4a525a;background:#fff}
+.callback .check{color:#c5cad1;font-size:13px}
+.callback .check a{color:#fff}
+.callback .field label{color:#e6e9ed}
+.callback .form-note{color:#aab1ba}
+.callback .field-error{color:#ffb4b8}
+
+@media (max-width:860px){.tool-form{grid-template-columns:1fr}}
+@media (max-width:560px){.opts{grid-template-columns:1fr}.guide{padding:22px}.guide-nav .btn{flex:1}}
+.text-link{background:none;border:0;padding:0;color:var(--green-dark);text-decoration:underline;font:inherit;cursor:pointer}
+@media print{.js .reveal{opacity:1!important;transform:none!important}}
+[tabindex="-1"]:focus{outline:none}
