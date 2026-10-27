@@ -28,7 +28,7 @@
 <div class="preview-banner">Anteprima di lavoro &middot; non indicizzata &middot; contenuti e dati legali da completare prima della pubblicazione</div><div class="topbar"><div class="wrap"><span>Figino &middot; Canton Ticino &middot; Svizzera</span><span>Specialisti dei sistemi antiparticolato</span></div></div>
 <header class="site-header"><div class="wrap">
 <a class="brand-logo" href="../index.html" aria-label="SWISS DPF SERVICE, home"><picture><source type="image/webp" srcset="../assets/img/logo-header.webp"><img src="../assets/img/logo-header.png" width="755" height="277" alt="SWISS DPF SERVICE"></picture></a>
-<button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+<button type="button" class="nav-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
 <nav class="main-nav" id="main-nav" aria-label="Principale">
 <div class="has-sub"><button type="button" aria-expanded="false" aria-haspopup="true">Servizi</button><div class="sub"><a href="../rigenerazione-dpf-fap/index.html">Rigenerazione DPF/FAP <span class="muted">· Diesel</span></a><a href="../rigenerazione-gpf-opf/index.html">Rigenerazione GPF/OPF <span class="muted">· Benzina</span></a><a href="../decarbonizzazione-preventiva/index.html">Decarbonizzazione preventiva <span class="muted">· Prevenzione</span></a><a href="../servizio-a-domicilio/index.html">Servizio a domicilio <span class="muted">· Presso di te</span></a></div></div>
 <a href="../officine-partner/index.html" aria-current="page">Officine partner</a><a href="../azienda/index.html">Azienda</a><a href="../guide/mfk-filtro-antiparticolato/index.html">Guida MFK</a><a href="../contatti/index.html">Contatti</a>
@@ -59,10 +59,10 @@
 <div><form class="callback" id="callback-form" novalidate data-thanks="../grazie/index.html">
 <h3>Preferisci che ti chiamiamo?</h3><p>Lasciaci nome e numero: ti richiamiamo per capire il tuo caso.</p>
 <div class="fields">
-<div class="field"><label for="cb-nome">Nome *</label><input id="cb-nome" name="nome" autocomplete="name" required><span class="field-error">Indica il tuo nome.</span></div>
+<div class="field"><label for="cb-nome">Nome *</label><input type="text" id="cb-nome" name="nome" autocomplete="name" required><span class="field-error">Indica il tuo nome.</span></div>
 <div class="field"><label for="cb-tel">Telefono *</label><input id="cb-tel" name="telefono" type="tel" autocomplete="tel" required><span class="field-error">Inserisci un numero valido.</span></div>
 <input type="hidden" name="richiesta" value="Richiamata">
-<div class="hp" aria-hidden="true"><label>Non compilare questo campo<input name="sito_web" tabindex="-1" autocomplete="off"></label></div>
+<div class="hp" aria-hidden="true"><label>Non compilare questo campo<input type="text" name="sito_web" tabindex="-1" autocomplete="off"></label></div>
 <div class="field field--full"><label class="check"><input type="checkbox" name="privacy" required><span>Ho letto l&rsquo;<a href="../privacy/index.html">informativa sulla privacy</a> e acconsento a essere richiamato. *</span></label><span class="field-error">Serve la presa visione dell&rsquo;informativa.</span></div>
 </div>
 <button class="btn btn--sm" type="submit">Richiamatemi <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -71,13 +71,13 @@
 <div class="fields">
 <div class="field"><label for="f-tipo">Sei un *</label><select id="f-tipo" name="tipo"><option>Privato</option><option>Azienda</option><option selected>Officina</option></select></div>
 <div class="field"><label for="f-servizio">Servizio di interesse</label><select id="f-servizio" name="servizio"><option>Informazioni generali</option><option>Rigenerazione DPF/FAP</option><option>Rigenerazione GPF/OPF</option><option>Decarbonizzazione preventiva</option><option>Servizio a domicilio</option><option selected>Programma officine partner</option></select></div>
-<div class="field"><label for="f-nome">Nome e cognome o ragione sociale *</label><input id="f-nome" name="nome" autocomplete="name" required><span class="field-error">Indica il tuo nome o la ragione sociale.</span></div>
-<div class="field" id="field-attivita" hidden><label for="f-attivita">Nome dell&rsquo;attività <span class="opt">(officina / azienda)</span></label><input id="f-attivita" name="attivita" autocomplete="organization"></div>
+<div class="field"><label for="f-nome">Nome e cognome o ragione sociale *</label><input type="text" id="f-nome" name="nome" autocomplete="name" required><span class="field-error">Indica il tuo nome o la ragione sociale.</span></div>
+<div class="field" id="field-attivita" hidden><label for="f-attivita">Nome dell&rsquo;attività <span class="opt">(officina / azienda)</span></label><input type="text" id="f-attivita" name="attivita" autocomplete="organization"></div>
 <div class="field"><label for="f-email">E-mail *</label><input id="f-email" name="email" type="email" autocomplete="email" required><span class="field-error">Inserisci un indirizzo e-mail valido.</span></div>
 <div class="field"><label for="f-tel">Telefono <span class="opt">(facoltativo)</span></label><input id="f-tel" name="telefono" type="tel" autocomplete="tel"></div>
-<div class="field field--full"><label for="f-veicolo">Veicolo <span class="opt">(facoltativo: marca, modello, anno, motore)</span></label><input id="f-veicolo" name="veicolo" placeholder="Es. marca, modello, anno"></div>
+<div class="field field--full"><label for="f-veicolo">Veicolo <span class="opt">(facoltativo: marca, modello, anno, motore)</span></label><input type="text" id="f-veicolo" name="veicolo" placeholder="Es. marca, modello, anno"></div>
 <div class="field field--full"><label for="f-msg">Messaggio *</label><textarea id="f-msg" name="messaggio" required placeholder="Descrivi la tua richiesta: sintomi, spie accese, servizio che ti interessa."></textarea><span class="field-error">Scrivi un breve messaggio.</span></div>
-<div class="hp" aria-hidden="true"><label>Non compilare questo campo<input name="sito_web" tabindex="-1" autocomplete="off"></label></div>
+<div class="hp" aria-hidden="true"><label>Non compilare questo campo<input type="text" name="sito_web" tabindex="-1" autocomplete="off"></label></div>
 <div class="field field--full"><label class="check"><input type="checkbox" name="privacy" required><span>Ho letto l&rsquo;<a href="../privacy/index.html">informativa sulla privacy</a> e acconsento al trattamento dei dati per rispondere alla mia richiesta. *</span></label><span class="field-error">Per inviare la richiesta serve la presa visione dell&rsquo;informativa.</span></div>
 </div>
 <p class="form-note">I campi con * sono obbligatori. Usiamo i dati solo per risponderti. Nessuna iscrizione a newsletter.</p>

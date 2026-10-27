@@ -95,7 +95,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .section--alt{background:var(--paper)}
 .section--dark{background:var(--ink);color:var(--white)}
 .section--dark .muted{color:#aab1ba}
-.eyebrow{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-bottom:14px}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--green-dark);margin-bottom:14px}
 .eyebrow::before{content:"";width:22px;height:2px;background:currentColor}
 .section--dark .eyebrow{color:var(--green-bright)}
 .section-head{max-width:760px;margin-bottom:44px}
@@ -164,10 +164,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .diagram figcaption{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8e96a0;margin-top:16px;text-align:center}
 
 /* Banner CTA */
-.cta-band{background:var(--green);color:var(--white);padding:44px 0}
+.cta-band{background:var(--green-dark);color:var(--white);padding:44px 0}
 .cta-band .wrap{display:flex;gap:30px;align-items:center;justify-content:space-between;flex-wrap:wrap}
 .cta-band h2{font-size:clamp(1.4rem,3vw,2rem);margin:0}
-.cta-band p{margin:6px 0 0;opacity:.92}
+.cta-band p{margin:6px 0 0}
 .cta-band .btn{background:var(--white);color:var(--ink);border-color:var(--white)}
 .cta-band .btn:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
 .cta-band .btn--ghost{background:transparent;color:var(--white);border-color:rgba(255,255,255,.7)}
