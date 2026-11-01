@@ -41,7 +41,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .topbar a:hover{color:var(--white)}
 .topbar .wrap{align-items:center;justify-content:flex-start;gap:8px 24px}
 .lang-switch{display:flex;gap:10px;margin-left:auto}
-.lang-switch a{padding:3px 12px;border-radius:4px;letter-spacing:.06em;color:#c5cad1}
+.lang-switch a{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:4px;letter-spacing:.06em;color:#c5cad1}
+.lang-switch .flag{width:20px;height:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.25)}
 .lang-switch a[aria-current="true"]{background:var(--green-bright);color:#0b0d0f;font-weight:700}
 
 /* Header */
