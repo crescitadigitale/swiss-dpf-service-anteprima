@@ -3,6 +3,8 @@
   'use strict';
 
   var CFG = window.SDS_CONFIG || {};
+  var I = window.SDS_I18N || {};          /* testi nella lingua della pagina (generati da tools/build.py) */
+  function fmt(t, o) { return String(t).replace(/\{(\w+)\}/g, function (m, k) { return o && k in o ? o[k] : m; }); }
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.documentElement.classList.add('js');
 
@@ -84,16 +86,16 @@
       e.preventDefault();
       status.className = 'form-status';
       if (!validate(form)) {
-        showStatus(status, 'err', 'Controlla i campi evidenziati e riprova.');
+        showStatus(status, 'err', I.form.check);
         return;
       }
       /* Antispam: campo trappola e tempo minimo di compilazione */
       if (form.elements['sito_web'].value || Date.now() - started() < 3000) {
-        showStatus(status, 'err', 'Invio non riuscito. Riprova tra qualche secondo oppure chiamaci al <a href="tel:+41762925822">076 292 58 22</a>.');
+        showStatus(status, 'err', I.form.spam);
         return;
       }
       if (!CFG.formEndpoint) {
-        showStatus(status, 'err', 'Il modulo online non è ancora attivo. Per la tua richiesta chiamaci al <a href="tel:+41762925822">076 292 58 22</a> o scrivi a <a href="mailto:contatti@swissdpfservice.ch">contatti@swissdpfservice.ch</a>.');
+        showStatus(status, 'err', I.form.off);
         return;
       }
       var btn = form.querySelector('button[type="submit"]');
@@ -107,7 +109,7 @@
         })
         .catch(function () {
           btn.disabled = false;
-          showStatus(status, 'err', 'Non è stato possibile inviare la richiesta. Riprova oppure chiamaci al <a href="tel:+41762925822">076 292 58 22</a> o scrivi a <a href="mailto:contatti@swissdpfservice.ch">contatti@swissdpfservice.ch</a>.');
+          showStatus(status, 'err', I.form.fail);
         });
     });
   }
@@ -152,7 +154,7 @@
     var next = guide.querySelector('[data-guide-next]');
     var result = guide.querySelector('.guide-result');
     var cur = 0;
-    var VEH = { diesel: 'Auto o furgone diesel', benzina: 'Auto o furgone a benzina con filtro', flotta: 'Veicoli aziendali / flotta', officina: 'Sono un\'officina' };
+    var G = I.guide;
 
     function picked(name) {
       var el = guide.querySelector('input[name="' + name + '"]:checked');
@@ -160,6 +162,15 @@
     }
     function symptoms() {
       return Array.prototype.map.call(guide.querySelectorAll('input[name="segnali"]:checked'), function (el) { return el.value; });
+    }
+    /* testo visibile dell'opzione scelta (nella lingua della pagina): i value restano i codici italiani */
+    function labelOf(el) { var s = el.nextElementSibling; return s ? s.textContent.trim() : el.value; }
+    function pickedLabel(name) {
+      var el = guide.querySelector('input[name="' + name + '"]:checked');
+      return el ? labelOf(el) : '';
+    }
+    function symptomLabels() {
+      return Array.prototype.map.call(guide.querySelectorAll('input[name="segnali"]:checked'), labelOf);
     }
     function render(moveFocus) {
       steps.forEach(function (s, i) { s.hidden = i !== cur; });
@@ -175,12 +186,14 @@
       var v = picked('veicolo'), sx = symptoms();
       var only = sx.length === 1 && sx[0] === 'Nessun sintomo, voglio prevenire';
       var key = 'dpf', title, text, tipo = 'Privato';
-      if (v === 'officina') { key = 'partner'; tipo = 'Officina'; title = 'Programma officine partner'; text = 'Per le officine c\'è un canale dedicato: ti spieghiamo il programma e valutiamo insieme la collaborazione.'; }
-      else if (only) { key = 'dec'; title = 'Decarbonizzazione preventiva'; text = 'Se non noti sintomi e vuoi prevenire, il servizio da valutare è la decarbonizzazione preventiva. Ti diciamo se ha senso per il tuo veicolo.'; }
-      else if (v === 'benzina') { key = 'gpf'; title = 'Rigenerazione GPF/OPF'; text = 'Per un benzina con filtro antiparticolato il servizio da valutare è la rigenerazione GPF/OPF, previa verifica dell\'idoneità.'; }
-      else { key = 'dpf'; title = 'Rigenerazione DPF/FAP'; text = 'Il servizio da valutare è la rigenerazione DPF/FAP, previa verifica dell\'idoneità del filtro.'; if (v === 'flotta') tipo = 'Azienda'; }
+      if (v === 'officina') { key = 'partner'; tipo = 'Officina'; }
+      else if (only) { key = 'dec'; }
+      else if (v === 'benzina') { key = 'gpf'; }
+      else { key = 'dpf'; if (v === 'flotta') tipo = 'Azienda'; }
+      title = G[key].title; text = G[key].text;
+      /* il value del campo "servizio" resta in italiano (codice); il messaggio precompilato è nella lingua della pagina */
       var servizio = { dpf: 'Rigenerazione DPF/FAP', gpf: 'Rigenerazione GPF/OPF', dec: 'Decarbonizzazione preventiva', partner: 'Programma officine partner' }[key];
-      var msg = 'Veicolo: ' + (VEH[v] || '') + '.' + (sx.length && v !== 'officina' ? ' Segnali: ' + sx.join(', ') + '.' : '') + ' Vorrei una valutazione.';
+      var msg = fmt(G.msgVehicle, { v: pickedLabel('veicolo') }) + (sx.length && v !== 'officina' ? ' ' + fmt(G.msgSymptoms, { s: symptomLabels().join(', ') }) : '') + ' ' + G.msgEnd;
       var contact = guide.getAttribute('data-contact') + '?tipo=' + encodeURIComponent(tipo) + '&servizio=' + encodeURIComponent(servizio) + '&msg=' + encodeURIComponent(msg) + '#modulo';
       result.querySelector('h3').textContent = title;
       result.querySelector('.guide-text').textContent = text;
@@ -215,10 +228,11 @@
       var f = e.target, kind = f.elements['mezzo'].value, fuel = f.elements['alim'].value;
       var raw = f.elements['codice'].value, s = raw.toUpperCase().replace(/[\s._\-]/g, '');
       var res = { cls: 'info', head: '', body: '' }, hit = false;
-      if (!s) { res.head = 'Inserisci il codice'; res.body = 'Lo trovi nel libretto di circolazione, al campo 72 (per esempio B6 o E06).'; }
+      var M = I.mfk;
+      if (!s) { res.head = M.enterHead; res.body = M.enterBody; }
       else if (fuel !== 'diesel') {
-        res.head = 'Il controllo riguarda i diesel';
-        res.body = 'Il controllo con misura delle particelle introdotto nel 2023 riguarda i veicoli diesel con filtro antiparticolato. Per gli altri veicoli non abbiamo informazioni verificate: chiedi pure a noi.';
+        res.head = M.fuelHead;
+        res.body = M.fuelBody;
       } else {
         var m, n, suf, known = true;
         if (kind === 'auto') {
@@ -228,17 +242,17 @@
           m = /^E(\d{1,2})/.exec(s);
           if (!m) known = false; else { n = +m[1]; hit = n >= 6; }
         }
-        if (!known) { res.head = 'Codice non riconosciuto'; res.body = 'Non riesco a interpretare «' + raw.replace(/[<>&"]/g, '') + '». Controlla il campo 72 del libretto, oppure scrivici il codice e ti rispondiamo.'; }
-        else if (hit) { res.cls = 'warn'; res.head = 'Probabilmente rientri nel controllo'; res.body = 'Un diesel con questo codice emissioni è tra quelli per cui la MFK verifica il filtro antiparticolato (limite 250\'000 particelle/cm³). Se hai un controllo in arrivo o noti sintomi, fai valutare il filtro.'; }
-        else { res.cls = 'ok'; res.head = 'Probabilmente non rientri'; res.body = 'Con questo codice emissioni il veicolo non risulta tra quelli interessati al controllo del filtro. Se noti sintomi, il filtro può comunque essere valutato.'; }
+        if (!known) { res.head = M.unknownHead; res.body = fmt(M.unknownBody, { code: raw.replace(/[<>&"]/g, '') }); }
+        else if (hit) { res.cls = 'warn'; res.head = M.warnHead; res.body = M.warnBody; }
+        else { res.cls = 'ok'; res.head = M.okHead; res.body = M.okBody; }
       }
       var cta = '';
       if (res.cls === 'warn' || res.cls === 'ok') {
-        var msg = 'Verifica MFK: codice emissioni ' + raw.replace(/[<>&"]/g, '').slice(0, 20) + '. Vorrei una valutazione del filtro.';
-        cta = '<p><a class="btn btn--sm" href="' + contactHref + '?tipo=Privato&servizio=Rigenerazione%20DPF%2FFAP&msg=' + encodeURIComponent(msg) + '#modulo">Richiedi una valutazione</a></p>';
+        var msg = fmt(M.msg, { code: raw.replace(/[<>&"]/g, '').slice(0, 20) });
+        cta = '<p><a class="btn btn--sm" href="' + contactHref + '?tipo=Privato&servizio=Rigenerazione%20DPF%2FFAP&msg=' + encodeURIComponent(msg) + '#modulo">' + M.cta + '</a></p>';
       }
       out.className = 'tool-out ' + res.cls;
-      out.innerHTML = '<strong>' + res.head + '</strong><p>' + res.body + '</p>' + cta + '<p class="sources">Indicazione di massima basata sulle informazioni AGVS (2023). Vale il controllo ufficiale dell\'autorità cantonale.</p>';
+      out.innerHTML = '<strong>' + res.head + '</strong><p>' + res.body + '</p>' + cta + '<p class="sources">' + M.source + '</p>';
     });
   }
   /* ---------- Officine convenzionate: filtro e mappa (swisstopo, caricata solo dopo il clic) ---------- */
@@ -279,17 +293,18 @@
     if (openBtn) {
       openBtn.addEventListener('click', function () {
         openBtn.disabled = true;
-        openBtn.textContent = 'Carico la mappa…';
+        openBtn.textContent = I.map.loading;
         var base = document.querySelector('script[src*="js/main.js"]').getAttribute('src').replace(/js\/main\.js.*$/, '');
         loadCss(base + 'vendor/leaflet/leaflet.css');
         var sc = document.createElement('script');
         sc.src = base + 'vendor/leaflet/leaflet.js';
-        sc.onerror = function () { openBtn.disabled = false; openBtn.textContent = 'Mappa non disponibile, riprova'; };
+        sc.onerror = function () { openBtn.disabled = false; openBtn.textContent = I.map.fail; };
         sc.onload = function () {
           var box = document.getElementById('map');
           box.hidden = false;
           document.querySelector('.map-gate').hidden = true;
-          map = L.map(box, { scrollWheelZoom: false }).setView([46.1, 8.95], 9);
+          map = L.map(box, { scrollWheelZoom: false, zoomControl: false }).setView([46.1, 8.95], 9);
+          L.control.zoom({ zoomInTitle: I.map.zoomIn, zoomOutTitle: I.map.zoomOut }).addTo(map);
           L.tileLayer('https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg', {
             maxZoom: 18, minZoom: 8, attribution: '&copy; <a href="https://www.swisstopo.admin.ch" rel="noopener">swisstopo</a>'
           }).addTo(map);
