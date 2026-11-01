@@ -241,4 +241,71 @@
       out.innerHTML = '<strong>' + res.head + '</strong><p>' + res.body + '</p>' + cta + '<p class="sources">Indicazione di massima basata sulle informazioni AGVS (2023). Vale il controllo ufficiale dell\'autorità cantonale.</p>';
     });
   }
+  /* ---------- Officine convenzionate: filtro e mappa (swisstopo, caricata solo dopo il clic) ---------- */
+  var partnerList = document.querySelector('.partner-list');
+  if (partnerList) {
+    var items = Array.prototype.slice.call(partnerList.querySelectorAll('.partner'));
+    var chips = document.querySelectorAll('.partner-filter .chip');
+    var zonaAttiva = '';
+    var map = null, markers = [];
+
+    function applyFilter() {
+      items.forEach(function (li) { li.hidden = !!zonaAttiva && li.getAttribute('data-zona') !== zonaAttiva; });
+      markers.forEach(function (m) {
+        var vis = !zonaAttiva || m.zona === zonaAttiva;
+        if (vis) { m.marker.addTo(map); } else { map.removeLayer(m.marker); }
+      });
+      if (map && markers.length) { fitMap(); }
+    }
+    function fitMap() {
+      var pts = markers.filter(function (m) { return !zonaAttiva || m.zona === zonaAttiva; })
+        .map(function (m) { return m.marker.getLatLng(); });
+      if (pts.length) { map.fitBounds(L.latLngBounds(pts).pad(0.3), { maxZoom: 14 }); }
+    }
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        zonaAttiva = chip.getAttribute('data-zona') || '';
+        chips.forEach(function (c) {
+          var on = c === chip;
+          c.classList.toggle('is-on', on);
+          c.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        applyFilter();
+      });
+    });
+
+    function loadCss(href) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
+    var openBtn = document.getElementById('map-open');
+    if (openBtn) {
+      openBtn.addEventListener('click', function () {
+        openBtn.disabled = true;
+        openBtn.textContent = 'Carico la mappa…';
+        var base = document.querySelector('script[src*="js/main.js"]').getAttribute('src').replace(/js\/main\.js.*$/, '');
+        loadCss(base + 'vendor/leaflet/leaflet.css');
+        var sc = document.createElement('script');
+        sc.src = base + 'vendor/leaflet/leaflet.js';
+        sc.onerror = function () { openBtn.disabled = false; openBtn.textContent = 'Mappa non disponibile, riprova'; };
+        sc.onload = function () {
+          var box = document.getElementById('map');
+          box.hidden = false;
+          document.querySelector('.map-gate').hidden = true;
+          map = L.map(box, { scrollWheelZoom: false }).setView([46.1, 8.95], 9);
+          L.tileLayer('https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg', {
+            maxZoom: 18, minZoom: 8, attribution: '&copy; <a href="https://www.swisstopo.admin.ch" rel="noopener">swisstopo</a>'
+          }).addTo(map);
+          L.Icon.Default.imagePath = sc.src.replace(/leaflet\.js.*$/, 'images/');
+          items.forEach(function (li) {
+            var m = L.marker([parseFloat(li.getAttribute('data-lat')), parseFloat(li.getAttribute('data-lng'))], { title: li.getAttribute('data-nome') });
+            m.bindPopup('<strong>' + li.getAttribute('data-nome') + '</strong>');
+            m.on('click', function () { li.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); });
+            markers.push({ marker: m, zona: li.getAttribute('data-zona') });
+            m.addTo(map);
+          });
+          fitMap();
+          applyFilter();
+        };
+        document.head.appendChild(sc);
+      });
+    }
+  }
 })();

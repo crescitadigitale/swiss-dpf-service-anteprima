@@ -386,3 +386,20 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
   .hero-side{margin:8px auto 0}
 }
 .photo--small{max-width:300px;margin-top:20px}
+
+/* officine convenzionate */
+.partner-filter{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.chip{font:inherit;font-size:14px;font-weight:600;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--white);color:var(--ink);cursor:pointer}
+.chip:hover{border-color:var(--green)}
+.chip.is-on{background:var(--green-dark);border-color:var(--green-dark);color:var(--white)}
+.partner-layout{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:28px;align-items:start}
+.partner-list{list-style:none;margin:0;padding:0;display:grid;gap:14px;max-height:560px;overflow:auto}
+.partner{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.partner[hidden]{display:none}
+.partner h3{margin:0 0 4px;font-size:1.05rem}
+.partner p{margin:4px 0;font-size:15px}
+.partner-links{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;font-weight:600}
+.partner-map{position:sticky;top:96px}
+.map-box{height:520px;border-radius:12px;border:1px solid var(--line);overflow:hidden}
+.map-gate{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:28px}
+@media (max-width:900px){.partner-layout{grid-template-columns:1fr}.partner-list{max-height:none}.map-box{height:380px}.partner-map{position:static}}
