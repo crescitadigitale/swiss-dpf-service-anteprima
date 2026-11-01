@@ -28,7 +28,7 @@
 <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
 <link rel="preload" href="../../assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/css/style.css?v=202611011633">
+<link rel="stylesheet" href="../../assets/css/style.css?v=202611011828">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://swissdpfservice.ch/de/"}, {"@type": "ListItem", "position": 2, "name": "Partnerwerkstätten", "item": "https://swissdpfservice.ch/de/partnerwerkstaetten/"}]}</script>
 </head>
 <body>
@@ -60,6 +60,40 @@
 <div class="card"><svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 28l8-8"/><path d="M26 14l3-3a8 8 0 0 1 11 11l-3 3"/><path d="M22 34l-3 3A8 8 0 0 1 8 26l3-3"/></svg><h3>So fangen Sie an</h3><p>Füllen Sie das Formular unten aus und geben Sie den Namen Ihres Betriebs und Ihr Anliegen an. Wir melden uns bei Ihnen, um Ihnen das Programm zu erklären und die Zusammenarbeit gemeinsam zu prüfen.</p></div></div></div></section>
 <section class="section"><div class="wrap"><div class="section-head"><div class="eyebrow">So funktioniert es</div><h2>Ein einfacher Einstieg.</h2></div>
 <ol class="steps "><li><h3>Kontakt</h3><p>Sie schreiben oder rufen uns an und stellen Ihre Werkstatt vor.</p></li><li><h3>Kennenlernen</h3><p>Wir erläutern Ihnen das Programm und die Formen der Zusammenarbeit.</p></li><li><h3>Einschätzung</h3><p>Gemeinsam prüfen wir, ob und wie wir zusammenarbeiten.</p></li><li><h3>Zusammenarbeit</h3><p>Wir legen Abläufe und Bedingungen direkt mit Ihnen fest.</p></li></ol></div></section>
+<section class="section" id="richiedi-convenzione"><div class="wrap"><div class="section-head"><div class="eyebrow">Für Werkstätten</div>
+<h2>Vereinbarung anfragen</h2>
+<p>Füllen Sie die Angaben Ihrer Werkstatt aus. Die Anfrage ist unverbindlich: Wir melden uns bei Ihnen, um das Programm zu erläutern. Ihre Werkstatt erscheint nur mit Ihrer schriftlichen Einwilligung auf der Website.</p></div>
+<form class="request" id="partner-form" novalidate data-thanks="../../de/danke/index.html">
+<div class="fields">
+<div class="field field--full reg" id="reg-box"><label for="p-nome">Name der Werkstatt oder Firma *</label>
+<div class="reg-search"><input id="p-nome" name="nome" type="text" autocomplete="organization" maxlength="120" required placeholder="z. B. Garage Rossi oder CHE-123.456.789">
+<button type="button" class="btn" id="reg-btn">Suchen</button></div>
+<span class="field-error">Geben Sie den Namen der Werkstatt an.</span>
+<p class="form-note reg-note">Freiwillig: Klicken Sie auf «Suchen», um Ihre Werkstatt im Bundesregister der Unternehmen (UID, einschliesslich Einzelunternehmen) zu finden und die Angaben automatisch auszufüllen. Der Suchtext wird an das Bundesregister gesendet; Sie können auch alles von Hand ausfüllen.</p>
+<div class="reg-loader" id="reg-loader" hidden><span class="reg-mark" aria-hidden="true"><picture><source type="image/webp" srcset="../../assets/img/logo-mark.webp"><img src="../../assets/img/logo-mark.png" width="290" height="130" alt=""></picture></span>
+<span class="reg-bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="reg-loading-text" id="reg-loading-text"></span></div>
+<div class="form-status" id="reg-status" role="status" aria-live="polite"></div><ul class="reg-list" id="reg-list" hidden></ul>
+<input type="hidden" name="forma_giuridica" value=""><input type="hidden" name="insegna" value=""></div>
+<div class="field"><label for="p-uid">UID-Nummer <span class="opt">(freiwillig, z. B. CHE-123.456.789)</span></label><input id="p-uid" name="uid" type="text"></div>
+<div class="field"><label for="p-ref">Ansprechperson *</label><input id="p-ref" name="referente" type="text" autocomplete="name" required><span class="field-error">Geben Sie die Ansprechperson an.</span></div>
+<div class="field field--full"><label for="p-ind">Adresse *</label><input id="p-ind" name="indirizzo" type="text" autocomplete="street-address" required><span class="field-error">Geben Sie die Adresse ein.</span></div>
+<div class="field"><label for="p-cap">PLZ *</label><input id="p-cap" name="cap" type="text" autocomplete="postal-code" required><span class="field-error">Geben Sie die PLZ ein.</span></div>
+<div class="field"><label for="p-com">Ort *</label><input id="p-com" name="comune" type="text" autocomplete="address-level2" required><span class="field-error">Geben Sie den Ort ein.</span></div>
+<div class="field"><label for="p-tel">Telefon *</label><input id="p-tel" name="telefono" type="tel" autocomplete="tel" required><span class="field-error">Geben Sie eine gültige Telefonnummer ein.</span></div>
+<div class="field"><label for="p-mail">E-Mail *</label><input id="p-mail" name="email" type="email" autocomplete="email" required><span class="field-error">Bitte geben Sie eine gültige E-Mail-Adresse ein.</span></div>
+<div class="field field--full"><label for="p-sito">Website <span class="opt">(freiwillig)</span></label><input id="p-sito" name="sito" type="url" autocomplete="url"></div>
+<fieldset class="field field--full"><legend>Services, die Sie interessieren <span class="opt">(freiwillig)</span></legend><div class="checks-row"><label class="check"><input type="checkbox" data-join="servizi" value="DPF/FAP"><span>DPF/FAP</span></label><label class="check"><input type="checkbox" data-join="servizi" value="GPF/OPF"><span>GPF/OPF</span></label><label class="check"><input type="checkbox" data-join="servizi" value="Decarbonizzazione"><span>Präventive Dekarbonisierung</span></label></div><input type="hidden" name="servizi" value=""></fieldset>
+<div class="field field--full"><label for="p-msg">Nachricht <span class="opt">(freiwillig)</span></label><textarea id="p-msg" name="messaggio"></textarea></div>
+<input type="hidden" name="tipo_richiesta" value="Richiesta di convenzione officina">
+<input type="hidden" name="lingua" value="de">
+<div class="hp" aria-hidden="true"><label>Dieses Feld nicht ausfüllen<input type="text" name="sito_web" tabindex="-1" autocomplete="off"></label></div>
+<div class="field field--full"><label class="check"><input type="checkbox" name="consenso" value="si"><span>Ich bin mit der Veröffentlichung der Daten meiner Werkstatt (Name, Adresse, Kontakt, Services) in der Liste der Werkstätten mit Vereinbarung auf der Website einverstanden, falls eine Vereinbarung zustande kommt. Die Einwilligung ist schriftlich zu bestätigen und jederzeit widerrufbar. <span class="opt">(freiwillig)</span></span></label></div>
+<div class="field field--full"><label class="check"><input type="checkbox" name="privacy" required><span>Ich habe die <a href="../../de/datenschutz/index.html">Datenschutzerklärung</a> gelesen und bin mit der Bearbeitung meiner Daten zur Beantwortung meiner Anfrage einverstanden. *</span></label><span class="field-error">Zum Absenden der Anfrage ist die Kenntnisnahme der Datenschutzerklärung erforderlich.</span></div>
+</div>
+<p class="form-note">Mit * markierte Felder sind Pflichtfelder. Wir verwenden die Daten nur, um Ihnen zu antworten. Keine Newsletter-Anmeldung.</p>
+<button class="btn" type="submit">Vereinbarungsanfrage senden <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+<div class="form-status" role="status" aria-live="polite"></div>
+</form></div></section>
 <section class="section section--alt" id="contatti"><div class="wrap contact-grid">
 <div><div class="eyebrow">Sprechen wir über Ihren Fall</div><h2>Informationen zum Programm anfordern</h2>
 <p class="muted">Sagen Sie uns, was Sie brauchen, für Ihr Fahrzeug oder für Ihre Werkstatt. Wir prüfen die Anfrage und nennen Ihnen den passenden Service.</p>
@@ -120,8 +154,8 @@
 <a href="tel:+41762925822"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/></svg> Anrufen</a><a href="https://wa.me/41762925822?text=Guten%20Tag%2C%20ich%20m%C3%B6chte%20Informationen%20zum%20Regenerationsservice%20f%C3%BCr%20den%20Partikelfilter." rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-5A9 9 0 1 1 8 19.5z"/></svg> WhatsApp</a>
 <a class="primary" href="../../de/kontakt/index.html#modulo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg> Offerte</a>
 </div>
-<script src="../../assets/js/config.js?v=202611011633"></script>
-<script src="../../assets/js/i18n-de.js?v=202611011633"></script>
-<script src="../../assets/js/main.js?v=202611011633" defer></script>
+<script src="../../assets/js/config.js?v=202611011828"></script>
+<script src="../../assets/js/i18n-de.js?v=202611011828"></script>
+<script src="../../assets/js/main.js?v=202611011828" defer></script>
 </body>
 </html>

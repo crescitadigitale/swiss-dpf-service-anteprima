@@ -100,6 +100,12 @@
       }
       var btn = form.querySelector('button[type="submit"]');
       btn.disabled = true;
+      /* gruppi di caselle (data-join) uniti in un solo campo, es. servizi = "DPF/FAP, GPF/OPF" */
+      form.querySelectorAll('input[type="checkbox"][data-join]').forEach(function (cb) {
+        var h = form.elements[cb.getAttribute('data-join')];
+        if (cb === form.querySelector('input[data-join="' + cb.getAttribute('data-join') + '"]')) h.value = '';
+        if (cb.checked) h.value += (h.value ? ', ' : '') + cb.value;
+      });
       var data = new FormData(form);
       data.delete('sito_web');
       fetch(CFG.formEndpoint, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
@@ -138,6 +144,133 @@
       });
     });
     wireForm(form, function () { return t0; });
+  }
+
+  /* ---------- Modulo "richiedi la convenzione" (officine) ---------- */
+  var pf = document.getElementById('partner-form');
+  if (pf) {
+    var t2 = Date.now();
+    wireForm(pf, function () { return t2; });
+
+    /* Ricerca facoltativa nel registro federale delle imprese (UID, servizio pubblico dell'Ufficio federale di statistica,
+       comprende anche le ditte individuali): parte solo al clic su "Cerca" o con Invio, mai mentre si scrive. */
+    var rQ = pf.elements['nome'], rBtn = document.getElementById('reg-btn'), rList = document.getElementById('reg-list'),
+        rSt = document.getElementById('reg-status'), rLoad = document.getElementById('reg-loader'), rBox = document.getElementById('reg-box');
+    var R = I.reg || {};
+    var UIDWS = 'https://www.uid-wse.admin.ch/V5.0/PublicServices.svc', NS_ORG = 'http://www.ech.ch/xmlns/eCH-0108/5';
+    var ECH97 = 'http://www.ech.ch/xmlns/eCH-0097/5', ECH98 = 'http://www.ech.ch/xmlns/eCH-0098/5';
+    document.getElementById('reg-loading-text').textContent = R.busy || '';
+    var setF = function (n, v) { if (pf.elements[n] && v) pf.elements[n].value = v; };
+    var fmtUid = function (n) { return 'CHE-' + n.slice(0, 3) + '.' + n.slice(3, 6) + '.' + n.slice(6); };
+    var clean = function (v) { return (v || '').replace(/\bnull\b/gi, ' ').replace(/\s+/g, ' ').replace(/\s+,/g, ',').replace(/^[,\s]+|[,\s]+$/g, ''); };
+    var fold = function (v) { return (v || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
+    var xmlText = function (el, ns, tag) { var n = el.getElementsByTagNameNS(ns, tag)[0]; return n ? n.textContent.trim() : ''; };
+    var esc = function (v) { return v.replace(/[<>&"']/g, ' '); };
+    var token = 0;
+    var closeList = function () { rList.hidden = true; rList.replaceChildren(); };
+    var resetStatus = function () { rSt.className = 'form-status'; rSt.textContent = ''; };
+    var busy = function (on) { rLoad.hidden = !on; rBox.classList.toggle('is-loading', on); rBtn.disabled = on; };
+
+    function soap(action, body) {
+      var ctl = window.AbortController ? new AbortController() : null;
+      if (ctl) setTimeout(function () { ctl.abort(); }, 25000);
+      return fetch(UIDWS, { method: 'POST', credentials: 'omit', signal: ctl ? ctl.signal : undefined,
+        headers: { 'Content-Type': 'text/xml; charset=utf-8', 'SOAPAction': '"http://www.uid.admin.ch/xmlns/uid-wse/IPublicServices/' + action + '"' },
+        body: '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>' + body + '</s:Body></s:Envelope>' })
+        .then(function (res) { if (!res.ok) throw new Error('HTTP ' + res.status); return res.text(); })
+        .then(function (txt) { return new DOMParser().parseFromString(txt, 'text/xml'); });
+    }
+
+    /* un risultato: i dati stanno nell'elemento <organisation> (eCH-0108) con identificazione e indirizzo */
+    function readOrg(org) {
+      var id = org.getElementsByTagNameNS(ECH98, 'organisationIdentification')[0], ad = org.getElementsByTagNameNS(ECH98, 'address')[0];
+      if (!id || !ad) return null;
+      var num = xmlText(id, ECH97, 'uidOrganisationId'), cat = xmlText(id, ECH97, 'uidOrganisationIdCategorie');
+      if (cat !== 'CHE' || !/^\d{9}$/.test(num)) return null;
+      return { name: clean(xmlText(id, ECH97, 'organisationName')), alt: clean(xmlText(id, ECH97, 'organisationAdditionalName')),
+               form: xmlText(id, ECH97, 'legalForm'), uid: fmtUid(num),
+               street: clean(xmlText(ad, ECH98, 'street') + ' ' + xmlText(ad, ECH98, 'houseNumber')), zip: xmlText(ad, ECH98, 'swissZipCode'),
+               town: clean(xmlText(ad, ECH98, 'town')), canton: xmlText(ad, ECH98, 'cantonAbbreviation'),
+               liq: org.getElementsByTagNameNS(NS_ORG, 'liquidation').length > 0 };
+    }
+
+    function query(raw) {
+      var uid = raw.match(/CHE\D*(\d{3})\D*(\d{3})\D*(\d{3})/i);
+      if (uid) {
+        return soap('GetByUID', '<GetByUID xmlns="http://www.uid.admin.ch/xmlns/uid-wse"><uid><uidOrganisationIdCategorie xmlns="' + ECH97 + '">CHE</uidOrganisationIdCategorie>' +
+          '<uidOrganisationId xmlns="' + ECH97 + '">' + uid[1] + uid[2] + uid[3] + '</uidOrganisationId></uid></GetByUID>')
+          .then(function (doc) { return [].slice.call(doc.getElementsByTagNameNS(NS_ORG, 'organisation')).map(readOrg).filter(Boolean); });
+      }
+      /* il servizio cerca parole intere e nell'ordine scritto: chiedo "*parola più lunga*" e filtro io tutte le parole, in qualsiasi ordine */
+      var words = fold(raw).split(/[^a-z0-9]+/).filter(function (w) { return w.length >= 2; });
+      var longest = words.slice().sort(function (a, b) { return b.length - a.length; })[0];
+      var term = esc(raw.split(/\s+/).filter(function (w) { return fold(w).indexOf(longest) >= 0; })[0] || longest);
+      return soap('Search', '<Search xmlns="http://www.uid.admin.ch/xmlns/uid-wse"><searchParameters><uidEntitySearchParameters xmlns="http://www.uid.admin.ch/xmlns/uid-wse/5">' +
+        '<organisationName>*' + term + '*</organisationName><address><cantonAbbreviation>TI</cantonAbbreviation></address></uidEntitySearchParameters></searchParameters>' +
+        '<config><searchMode xmlns="http://www.uid.admin.ch/xmlns/uid-wse-shared/2">Normal</searchMode><maxNumberOfRecords xmlns="http://www.uid.admin.ch/xmlns/uid-wse-shared/2">100</maxNumberOfRecords>' +
+        '<searchNameAndAddressHistory xmlns="http://www.uid.admin.ch/xmlns/uid-wse-shared/2">false</searchNameAndAddressHistory></config></Search>')
+        .then(function (doc) {
+          return [].slice.call(doc.getElementsByTagNameNS('http://www.uid.admin.ch/xmlns/uid-wse/5', 'uidEntitySearchResultItem')).map(function (it) {
+            return readOrg(it.getElementsByTagNameNS(NS_ORG, 'organisation')[0]);
+          }).filter(Boolean).filter(function (o) {
+            var hay = fold(o.name + ' ' + o.alt);
+            return words.every(function (w) { return hay.indexOf(w) >= 0; });
+          });
+        });
+    }
+
+    var search = function (fromUid) {
+      var raw = (fromUid === true ? pf.elements['uid'].value : rQ.value).trim();
+      closeList();
+      if (raw.length < 3) { showStatus(rSt, 'err', R.short); rQ.focus(); return; }
+      resetStatus();
+      var me = ++token, started = Date.now();
+      busy(true);
+      var done = function (fn) { setTimeout(function () { if (me !== token) return; busy(false); fn(); }, Math.max(0, 900 - (Date.now() - started))); };
+      query(raw).then(function (rows) {
+        var seen = {}, f0 = fold(raw);
+        rows = rows.filter(function (o) { if (seen[o.uid] || o.liq || o.canton !== 'TI' || /liquidazione|liquidation|faillit|fallit/i.test(o.name)) return false; return (seen[o.uid] = true); })
+          .sort(function (a, b) { var sa = fold(a.name).indexOf(f0) === 0 ? 0 : 1, sb = fold(b.name).indexOf(f0) === 0 ? 0 : 1; return sa - sb || a.name.localeCompare(b.name); });
+        var total = rows.length; rows = rows.slice(0, 10);
+        done(function () {
+          if (!rows.length) { showStatus(rSt, 'err', R.none); return; }
+          rSt.className = 'form-status reg-pick'; rSt.textContent = total > rows.length ? (R.more || '').replace('{n}', rows.length) : R.pick;
+          rows.forEach(function (o) {
+            var li = document.createElement('li'), bt = document.createElement('button'), nm = document.createElement('strong'),
+                ad = document.createElement('span'), ui = document.createElement('small');
+            bt.type = 'button';
+            nm.textContent = o.name;
+            if (o.alt) { var em = document.createElement('em'); em.textContent = ' · ' + o.alt; nm.appendChild(em); }
+            ad.textContent = [o.street, (o.zip + ' ' + o.town).trim()].filter(Boolean).join(', ');
+            ui.textContent = o.uid + ((R.forms || {})[o.form] ? ' · ' + R.forms[o.form] : '');
+            bt.append(nm, ad, ui);
+            bt.addEventListener('click', function () {
+              setF('nome', o.name); setF('uid', o.uid); setF('indirizzo', o.street); setF('cap', o.zip); setF('comune', o.town);
+              pf.elements['forma_giuridica'].value = ({ '0101': 'Ditta individuale', '0103': 'Società in nome collettivo', '0104': 'Società in accomandita',
+                '0106': 'Società anonima (SA)', '0107': 'Società a garanzia limitata (Sagl)', '0108': 'Società cooperativa', '0109': 'Associazione', '0110': 'Fondazione' })[o.form] || '';
+              pf.elements['insegna'].value = o.alt;
+              closeList(); showStatus(rSt, 'ok', R.done);
+              pf.elements[pf.elements['referente'].value ? 'telefono' : 'referente'].focus();
+            });
+            li.appendChild(bt); rList.appendChild(li);
+          });
+          var x = document.createElement('li'), xb = document.createElement('button');
+          xb.type = 'button'; xb.className = 'reg-close'; xb.textContent = R.close || '×';
+          xb.addEventListener('click', function () { closeList(); resetStatus(); });
+          x.appendChild(xb); rList.appendChild(x);
+          rList.hidden = false;
+        });
+      }).catch(function () { done(function () { showStatus(rSt, 'err', R.fail); }); });
+    };
+    rBtn.addEventListener('click', function () { search(); });
+    rQ.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); search(); }
+      if (e.key === 'Escape') { closeList(); resetStatus(); }
+    });
+    /* anche dal campo UID: Invio cerca per numero UID */
+    pf.elements['uid'].addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); search(true); }
+    });
   }
 
   /* ---------- Modulo "ti richiamiamo" ---------- */

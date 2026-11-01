@@ -5,6 +5,26 @@ window.SDS_I18N = {
   "off": "The online form is not active yet. For your request, call us on <a href=\"tel:+41762925822\">076 292 58 22</a> or write to <a href=\"mailto:contatti@swissdpfservice.ch\">contatti@swissdpfservice.ch</a>.",
   "fail": "The request could not be sent. Try again, or call us on <a href=\"tel:+41762925822\">076 292 58 22</a> or write to <a href=\"mailto:contatti@swissdpfservice.ch\">contatti@swissdpfservice.ch</a>."
  },
+ "reg": {
+  "short": "Enter at least 3 letters of the name or the UID number (CHE-123.456.789).",
+  "busy": "Searching the register…",
+  "more": "Showing the first {n}: type more letters to narrow the search.",
+  "close": "Close results",
+  "none": "No results in Ticino. Please fill in the details by hand.",
+  "fail": "Search unavailable. Please fill in the details by hand.",
+  "pick": "Choose your garage:",
+  "forms": {
+   "0101": "Sole proprietorship",
+   "0103": "General partnership",
+   "0104": "Limited partnership",
+   "0106": "Corporation (AG/SA)",
+   "0107": "Limited liability company (GmbH/Sàrl)",
+   "0108": "Cooperative",
+   "0109": "Association",
+   "0110": "Foundation"
+  },
+  "done": "Details filled in from the register: please check and complete them (contact person, phone, e-mail)."
+ },
  "map": {
   "loading": "Loading the map…",
   "fail": "Map not available, try again",

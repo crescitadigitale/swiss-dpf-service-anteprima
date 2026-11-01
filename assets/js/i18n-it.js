@@ -5,6 +5,26 @@ window.SDS_I18N = {
   "off": "Il modulo online non è ancora attivo. Per la tua richiesta chiamaci al <a href=\"tel:+41762925822\">076 292 58 22</a> o scrivi a <a href=\"mailto:contatti@swissdpfservice.ch\">contatti@swissdpfservice.ch</a>.",
   "fail": "Non è stato possibile inviare la richiesta. Riprova oppure chiamaci al <a href=\"tel:+41762925822\">076 292 58 22</a> o scrivi a <a href=\"mailto:contatti@swissdpfservice.ch\">contatti@swissdpfservice.ch</a>."
  },
+ "reg": {
+  "short": "Scrivi almeno 3 lettere del nome o il numero UID (CHE-123.456.789).",
+  "busy": "Cerco nel registro…",
+  "more": "Mostro i primi {n}: scrivi più lettere per restringere la ricerca.",
+  "close": "Chiudi i risultati",
+  "none": "Nessun risultato in Ticino. Compila i dati a mano.",
+  "fail": "Ricerca non disponibile. Compila i dati a mano.",
+  "pick": "Scegli la tua officina:",
+  "forms": {
+   "0101": "Ditta individuale",
+   "0103": "Società in nome collettivo",
+   "0104": "Società in accomandita",
+   "0106": "Società anonima (SA)",
+   "0107": "Società a garanzia limitata (Sagl)",
+   "0108": "Società cooperativa",
+   "0109": "Associazione",
+   "0110": "Fondazione"
+  },
+  "done": "Dati compilati dal registro: controllali e completali (persona di riferimento, telefono, e-mail)."
+ },
  "map": {
   "loading": "Carico la mappa…",
   "fail": "Mappa non disponibile, riprova",

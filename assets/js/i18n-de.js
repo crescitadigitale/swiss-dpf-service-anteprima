@@ -5,6 +5,26 @@ window.SDS_I18N = {
   "off": "Das Online-Formular ist noch nicht aktiv. Für Ihre Anfrage rufen Sie uns unter <a href=\"tel:+41762925822\">076 292 58 22</a> an oder schreiben Sie an <a href=\"mailto:contatti@swissdpfservice.ch\">contatti@swissdpfservice.ch</a>.",
   "fail": "Die Anfrage konnte nicht gesendet werden. Versuchen Sie es erneut oder rufen Sie uns unter <a href=\"tel:+41762925822\">076 292 58 22</a> an oder schreiben Sie an <a href=\"mailto:contatti@swissdpfservice.ch\">contatti@swissdpfservice.ch</a>."
  },
+ "reg": {
+  "short": "Geben Sie mindestens 3 Buchstaben des Namens oder die UID-Nummer (CHE-123.456.789) ein.",
+  "busy": "Suche im Register …",
+  "more": "Die ersten {n} werden angezeigt: Geben Sie mehr Buchstaben ein, um die Suche einzugrenzen.",
+  "close": "Ergebnisse schliessen",
+  "none": "Keine Treffer im Tessin. Bitte füllen Sie die Angaben von Hand aus.",
+  "fail": "Suche nicht verfügbar. Bitte füllen Sie die Angaben von Hand aus.",
+  "pick": "Wählen Sie Ihre Werkstatt:",
+  "forms": {
+   "0101": "Einzelunternehmen",
+   "0103": "Kollektivgesellschaft",
+   "0104": "Kommanditgesellschaft",
+   "0106": "Aktiengesellschaft (AG)",
+   "0107": "Gesellschaft mit beschränkter Haftung (GmbH)",
+   "0108": "Genossenschaft",
+   "0109": "Verein",
+   "0110": "Stiftung"
+  },
+  "done": "Aus dem Register ausgefüllt: bitte prüfen und ergänzen (Ansprechperson, Telefon, E-Mail)."
+ },
  "map": {
   "loading": "Karte wird geladen…",
   "fail": "Karte nicht verfügbar, bitte erneut versuchen",

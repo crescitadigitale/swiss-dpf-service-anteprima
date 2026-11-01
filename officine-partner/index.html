@@ -28,7 +28,7 @@
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
 <link rel="manifest" href="../site.webmanifest">
 <link rel="preload" href="../assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/style.css?v=202611011633">
+<link rel="stylesheet" href="../assets/css/style.css?v=202611011828">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://swissdpfservice.ch/"}, {"@type": "ListItem", "position": 2, "name": "Officine partner", "item": "https://swissdpfservice.ch/officine-partner/"}]}</script>
 </head>
 <body>
@@ -60,6 +60,40 @@
 <div class="card"><svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 28l8-8"/><path d="M26 14l3-3a8 8 0 0 1 11 11l-3 3"/><path d="M22 34l-3 3A8 8 0 0 1 8 26l3-3"/></svg><h3>Come iniziare</h3><p>Compila il modulo qui sotto indicando il nome dell&rsquo;attività e cosa ti interessa. Ti ricontattiamo per spiegarti il programma e valutare insieme la collaborazione.</p></div></div></div></section>
 <section class="section"><div class="wrap"><div class="section-head"><div class="eyebrow">Come funziona</div><h2>Un percorso semplice per iniziare.</h2></div>
 <ol class="steps "><li><h3>Contatto</h3><p>Ci scrivi o ci chiami presentando la tua officina.</p></li><li><h3>Conoscenza</h3><p>Ti illustriamo il programma e le modalità di collaborazione.</p></li><li><h3>Valutazione</h3><p>Valutiamo insieme se e come collaborare.</p></li><li><h3>Collaborazione</h3><p>Definiamo direttamente con te modalità e condizioni.</p></li></ol></div></section>
+<section class="section" id="richiedi-convenzione"><div class="wrap"><div class="section-head"><div class="eyebrow">Per le officine</div>
+<h2>Richiedi la convenzione</h2>
+<p>Compila i dati dell&rsquo;officina. La richiesta non comporta alcun obbligo: ti ricontattiamo per spiegarti il programma. L&rsquo;officina compare sul sito solo dopo un tuo consenso scritto.</p></div>
+<form class="request" id="partner-form" novalidate data-thanks="../grazie/index.html">
+<div class="fields">
+<div class="field field--full reg" id="reg-box"><label for="p-nome">Nome dell&rsquo;officina o ragione sociale *</label>
+<div class="reg-search"><input id="p-nome" name="nome" type="text" autocomplete="organization" maxlength="120" required placeholder="Es. Garage Rossi oppure CHE-123.456.789">
+<button type="button" class="btn" id="reg-btn">Cerca</button></div>
+<span class="field-error">Indica il nome dell&rsquo;officina.</span>
+<p class="form-note reg-note">Facoltativo: premi &laquo;Cerca&raquo; per trovare l&rsquo;officina nel registro federale delle imprese (UID, comprese le ditte individuali) e compilare i dati in automatico. Il testo cercato viene inviato al registro federale; puoi anche compilare tutto a mano.</p>
+<div class="reg-loader" id="reg-loader" hidden><span class="reg-mark" aria-hidden="true"><picture><source type="image/webp" srcset="../assets/img/logo-mark.webp"><img src="../assets/img/logo-mark.png" width="290" height="130" alt=""></picture></span>
+<span class="reg-bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="reg-loading-text" id="reg-loading-text"></span></div>
+<div class="form-status" id="reg-status" role="status" aria-live="polite"></div><ul class="reg-list" id="reg-list" hidden></ul>
+<input type="hidden" name="forma_giuridica" value=""><input type="hidden" name="insegna" value=""></div>
+<div class="field"><label for="p-uid">Numero IDI/UID <span class="opt">(facoltativo, es. CHE-123.456.789)</span></label><input id="p-uid" name="uid" type="text"></div>
+<div class="field"><label for="p-ref">Persona di riferimento *</label><input id="p-ref" name="referente" type="text" autocomplete="name" required><span class="field-error">Indica la persona di riferimento.</span></div>
+<div class="field field--full"><label for="p-ind">Indirizzo *</label><input id="p-ind" name="indirizzo" type="text" autocomplete="street-address" required><span class="field-error">Inserisci l&rsquo;indirizzo.</span></div>
+<div class="field"><label for="p-cap">CAP *</label><input id="p-cap" name="cap" type="text" autocomplete="postal-code" required><span class="field-error">Inserisci il CAP.</span></div>
+<div class="field"><label for="p-com">Località *</label><input id="p-com" name="comune" type="text" autocomplete="address-level2" required><span class="field-error">Inserisci la località.</span></div>
+<div class="field"><label for="p-tel">Telefono *</label><input id="p-tel" name="telefono" type="tel" autocomplete="tel" required><span class="field-error">Inserisci un numero di telefono valido.</span></div>
+<div class="field"><label for="p-mail">E-mail *</label><input id="p-mail" name="email" type="email" autocomplete="email" required><span class="field-error">Inserisci un indirizzo e-mail valido.</span></div>
+<div class="field field--full"><label for="p-sito">Sito web <span class="opt">(facoltativo)</span></label><input id="p-sito" name="sito" type="url" autocomplete="url"></div>
+<fieldset class="field field--full"><legend>Servizi che ti interessano <span class="opt">(facoltativo)</span></legend><div class="checks-row"><label class="check"><input type="checkbox" data-join="servizi" value="DPF/FAP"><span>DPF/FAP</span></label><label class="check"><input type="checkbox" data-join="servizi" value="GPF/OPF"><span>GPF/OPF</span></label><label class="check"><input type="checkbox" data-join="servizi" value="Decarbonizzazione"><span>Decarbonizzazione preventiva</span></label></div><input type="hidden" name="servizi" value=""></fieldset>
+<div class="field field--full"><label for="p-msg">Messaggio <span class="opt">(facoltativo)</span></label><textarea id="p-msg" name="messaggio"></textarea></div>
+<input type="hidden" name="tipo_richiesta" value="Richiesta di convenzione officina">
+<input type="hidden" name="lingua" value="it">
+<div class="hp" aria-hidden="true"><label>Non compilare questo campo<input type="text" name="sito_web" tabindex="-1" autocomplete="off"></label></div>
+<div class="field field--full"><label class="check"><input type="checkbox" name="consenso" value="si"><span>Acconsento alla pubblicazione dei dati della mia officina (nome, indirizzo, contatti, servizi) nell&rsquo;elenco delle officine convenzionate del sito, se la convenzione verrà concordata. Il consenso va confermato per iscritto e puoi revocarlo in ogni momento. <span class="opt">(facoltativo)</span></span></label></div>
+<div class="field field--full"><label class="check"><input type="checkbox" name="privacy" required><span>Ho letto l&rsquo;<a href="../privacy/index.html">informativa sulla privacy</a> e acconsento al trattamento dei dati per rispondere alla mia richiesta. *</span></label><span class="field-error">Per inviare la richiesta serve la presa visione dell&rsquo;informativa.</span></div>
+</div>
+<p class="form-note">I campi con * sono obbligatori. Usiamo i dati solo per risponderti. Nessuna iscrizione a newsletter.</p>
+<button class="btn" type="submit">Invia la richiesta di convenzione <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+<div class="form-status" role="status" aria-live="polite"></div>
+</form></div></section>
 <section class="section section--alt" id="contatti"><div class="wrap contact-grid">
 <div><div class="eyebrow">Parliamo del tuo caso</div><h2>Richiedi informazioni sul programma</h2>
 <p class="muted">Raccontaci di cosa hai bisogno, per il tuo veicolo o per la tua officina. Valutiamo la richiesta e ti indichiamo il servizio adatto.</p>
@@ -120,8 +154,8 @@
 <a href="tel:+41762925822"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/></svg> Chiama</a><a href="https://wa.me/41762925822?text=Buongiorno%2C%20vorrei%20informazioni%20sul%20servizio%20di%20rigenerazione%20del%20filtro%20antiparticolato." rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-5A9 9 0 1 1 8 19.5z"/></svg> WhatsApp</a>
 <a class="primary" href="../contatti/index.html#modulo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg> Preventivo</a>
 </div>
-<script src="../assets/js/config.js?v=202611011633"></script>
-<script src="../assets/js/i18n-it.js?v=202611011633"></script>
-<script src="../assets/js/main.js?v=202611011633" defer></script>
+<script src="../assets/js/config.js?v=202611011828"></script>
+<script src="../assets/js/i18n-it.js?v=202611011828"></script>
+<script src="../assets/js/main.js?v=202611011828" defer></script>
 </body>
 </html>

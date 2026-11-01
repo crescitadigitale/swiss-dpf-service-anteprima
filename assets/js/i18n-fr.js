@@ -5,6 +5,26 @@ window.SDS_I18N = {
   "off": "Le formulaire en ligne n’est pas encore actif. Pour votre demande, appelez-nous au <a href=\"tel:+41762925822\">076 292 58 22</a> ou écrivez à <a href=\"mailto:contatti@swissdpfservice.ch\">contatti@swissdpfservice.ch</a>.",
   "fail": "La demande n’a pas pu être envoyée. Réessayez ou appelez-nous au <a href=\"tel:+41762925822\">076 292 58 22</a> ou écrivez à <a href=\"mailto:contatti@swissdpfservice.ch\">contatti@swissdpfservice.ch</a>."
  },
+ "reg": {
+  "short": "Saisissez au moins 3 lettres du nom ou le numéro IDE/UID (CHE-123.456.789).",
+  "busy": "Recherche dans le registre…",
+  "more": "Affichage des {n} premiers : saisissez plus de lettres pour affiner la recherche.",
+  "close": "Fermer les résultats",
+  "none": "Aucun résultat au Tessin. Remplissez les données à la main.",
+  "fail": "Recherche indisponible. Remplissez les données à la main.",
+  "pick": "Choisissez votre garage :",
+  "forms": {
+   "0101": "Entreprise individuelle",
+   "0103": "Société en nom collectif",
+   "0104": "Société en commandite",
+   "0106": "Société anonyme (SA)",
+   "0107": "Société à responsabilité limitée (Sàrl)",
+   "0108": "Société coopérative",
+   "0109": "Association",
+   "0110": "Fondation"
+  },
+  "done": "Données remplies à partir du registre : vérifiez-les et complétez-les (personne de contact, téléphone, e-mail)."
+ },
  "map": {
   "loading": "Chargement de la carte…",
   "fail": "Carte indisponible, réessayez",
