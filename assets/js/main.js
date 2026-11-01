@@ -296,7 +296,9 @@
           L.Icon.Default.imagePath = sc.src.replace(/leaflet\.js.*$/, 'images/');
           items.forEach(function (li) {
             var m = L.marker([parseFloat(li.getAttribute('data-lat')), parseFloat(li.getAttribute('data-lng'))], { title: li.getAttribute('data-nome') });
-            m.bindPopup('<strong>' + li.getAttribute('data-nome') + '</strong>');
+            var nomeEl = document.createElement('strong');
+            nomeEl.textContent = li.getAttribute('data-nome');
+            m.bindPopup(nomeEl);
             m.on('click', function () { li.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); });
             markers.push({ marker: m, zona: li.getAttribute('data-zona') });
             m.addTo(map);
