@@ -152,6 +152,16 @@
     var t2 = Date.now();
     wireForm(pf, function () { return t2; });
 
+    /* "Seleziona tutti" per i servizi */
+    var all = document.getElementById('srv-all'), boxes = [].slice.call(pf.querySelectorAll('input[data-join="servizi"]'));
+    if (all) {
+      all.addEventListener('change', function () { boxes.forEach(function (b) { b.checked = all.checked; }); });
+      boxes.forEach(function (b) { b.addEventListener('change', function () {
+        var n = boxes.filter(function (x) { return x.checked; }).length;
+        all.checked = n === boxes.length; all.indeterminate = n > 0 && n < boxes.length;
+      }); });
+    }
+
     /* Ricerca facoltativa nel registro federale delle imprese (UID, servizio pubblico dell'Ufficio federale di statistica,
        comprende anche le ditte individuali): parte solo al clic su "Cerca" o con Invio, mai mentre si scrive. */
     var rQ = pf.elements['nome'], rBtn = document.getElementById('reg-btn'), rList = document.getElementById('reg-list'),
@@ -263,6 +273,14 @@
       }).catch(function () { done(function () { showStatus(rSt, 'err', R.fail); }); });
     };
     rBtn.addEventListener('click', function () { search(); });
+    /* ricerca automatica: parte dopo una pausa di scrittura (almeno 3 caratteri) */
+    var timer = null, ultimo = '';
+    rQ.addEventListener('input', function () {
+      clearTimeout(timer);
+      var v = rQ.value.trim();
+      if (v.length < 3 || v === ultimo) { if (v.length < 3) { closeList(); resetStatus(); } return; }
+      timer = setTimeout(function () { ultimo = v; search(); }, 900);
+    });
     rQ.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') { e.preventDefault(); search(); }
       if (e.key === 'Escape') { closeList(); resetStatus(); }

@@ -1,1 +1,1 @@
-window.SDS_CONFIG = { formEndpoint: "" };
+window.SDS_CONFIG = { formEndpoint: "/api/richiesta" };

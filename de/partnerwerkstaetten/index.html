@@ -28,7 +28,7 @@
 <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
 <link rel="preload" href="../../assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/css/style.css?v=202611011828">
+<link rel="stylesheet" href="../../assets/css/style.css?v=202611011918">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://swissdpfservice.ch/de/"}, {"@type": "ListItem", "position": 2, "name": "Partnerwerkstätten", "item": "https://swissdpfservice.ch/de/partnerwerkstaetten/"}]}</script>
 </head>
 <body>
@@ -69,7 +69,7 @@
 <div class="reg-search"><input id="p-nome" name="nome" type="text" autocomplete="organization" maxlength="120" required placeholder="z. B. Garage Rossi oder CHE-123.456.789">
 <button type="button" class="btn" id="reg-btn">Suchen</button></div>
 <span class="field-error">Geben Sie den Namen der Werkstatt an.</span>
-<p class="form-note reg-note">Freiwillig: Klicken Sie auf «Suchen», um Ihre Werkstatt im Bundesregister der Unternehmen (UID, einschliesslich Einzelunternehmen) zu finden und die Angaben automatisch auszufüllen. Der Suchtext wird an das Bundesregister gesendet; Sie können auch alles von Hand ausfüllen.</p>
+<p class="form-note reg-note">Freiwillig: Geben Sie den Namen oder die UID-Nummer ein, und Ihre Werkstatt wird im Bundesregister der Unternehmen (einschliesslich Einzelunternehmen) gesucht, um die Angaben automatisch auszufüllen. Die Suche startet nach einer kurzen Pause beim Tippen von selbst oder mit «Suchen»; der Text wird an das Bundesregister gesendet. Sie können auch alles von Hand ausfüllen.</p>
 <div class="reg-loader" id="reg-loader" hidden><span class="reg-mark" aria-hidden="true"><picture><source type="image/webp" srcset="../../assets/img/logo-mark.webp"><img src="../../assets/img/logo-mark.png" width="290" height="130" alt=""></picture></span>
 <span class="reg-bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="reg-loading-text" id="reg-loading-text"></span></div>
 <div class="form-status" id="reg-status" role="status" aria-live="polite"></div><ul class="reg-list" id="reg-list" hidden></ul>
@@ -82,7 +82,7 @@
 <div class="field"><label for="p-tel">Telefon *</label><input id="p-tel" name="telefono" type="tel" autocomplete="tel" required><span class="field-error">Geben Sie eine gültige Telefonnummer ein.</span></div>
 <div class="field"><label for="p-mail">E-Mail *</label><input id="p-mail" name="email" type="email" autocomplete="email" required><span class="field-error">Bitte geben Sie eine gültige E-Mail-Adresse ein.</span></div>
 <div class="field field--full"><label for="p-sito">Website <span class="opt">(freiwillig)</span></label><input id="p-sito" name="sito" type="url" autocomplete="url"></div>
-<fieldset class="field field--full"><legend>Services, die Sie interessieren <span class="opt">(freiwillig)</span></legend><div class="checks-row"><label class="check"><input type="checkbox" data-join="servizi" value="DPF/FAP"><span>DPF/FAP</span></label><label class="check"><input type="checkbox" data-join="servizi" value="GPF/OPF"><span>GPF/OPF</span></label><label class="check"><input type="checkbox" data-join="servizi" value="Decarbonizzazione"><span>Präventive Dekarbonisierung</span></label></div><input type="hidden" name="servizi" value=""></fieldset>
+<fieldset class="field field--full"><legend>Services, die Sie interessieren <span class="opt">(freiwillig)</span></legend><div class="checks-row"><label class="check check--all"><input type="checkbox" id="srv-all"><span>Alle auswählen</span></label><label class="check"><input type="checkbox" data-join="servizi" value="DPF/FAP"><span>DPF/FAP</span></label><label class="check"><input type="checkbox" data-join="servizi" value="GPF/OPF"><span>GPF/OPF</span></label><label class="check"><input type="checkbox" data-join="servizi" value="Decarbonizzazione"><span>Präventive Dekarbonisierung</span></label></div><input type="hidden" name="servizi" value=""></fieldset>
 <div class="field field--full"><label for="p-msg">Nachricht <span class="opt">(freiwillig)</span></label><textarea id="p-msg" name="messaggio"></textarea></div>
 <input type="hidden" name="tipo_richiesta" value="Richiesta di convenzione officina">
 <input type="hidden" name="lingua" value="de">
@@ -154,8 +154,8 @@
 <a href="tel:+41762925822"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/></svg> Anrufen</a><a href="https://wa.me/41762925822?text=Guten%20Tag%2C%20ich%20m%C3%B6chte%20Informationen%20zum%20Regenerationsservice%20f%C3%BCr%20den%20Partikelfilter." rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-5A9 9 0 1 1 8 19.5z"/></svg> WhatsApp</a>
 <a class="primary" href="../../de/kontakt/index.html#modulo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg> Offerte</a>
 </div>
-<script src="../../assets/js/config.js?v=202611011828"></script>
-<script src="../../assets/js/i18n-de.js?v=202611011828"></script>
-<script src="../../assets/js/main.js?v=202611011828" defer></script>
+<script src="../../assets/js/config.js?v=202611011918"></script>
+<script src="../../assets/js/i18n-de.js?v=202611011918"></script>
+<script src="../../assets/js/main.js?v=202611011918" defer></script>
 </body>
 </html>
