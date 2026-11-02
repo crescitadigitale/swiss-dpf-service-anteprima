@@ -1,4 +1,23 @@
 {
  "aggiornato": "2026-11-01",
- "officine": []
+ "officine": [
+  {
+   "id": "swiss-dpf-service-sede-prova-mappa-figino",
+   "nome": "SWISS DPF SERVICE (sede, prova mappa)",
+   "indirizzo": "Via Pree 1",
+   "cap": "6918",
+   "comune": "Figino",
+   "zona": "Luganese",
+   "lat": 45.9594,
+   "lng": 8.920625,
+   "telefono": "076 292 58 22",
+   "sito": "",
+   "servizi": [
+    "DPF/FAP",
+    "GPF/OPF",
+    "Decarbonizzazione"
+   ],
+   "social": {}
+  }
+ ]
 }
